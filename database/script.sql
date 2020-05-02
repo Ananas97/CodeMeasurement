@@ -30,36 +30,35 @@
  );
  
  CREATE TABLE general_metrics(
+ general_metrics_id BIGSERIAL PRIMARY KEY,
  project_id BIGINT REFERENCES project(project_id) NOT NULL,
  update_date TIMESTAMP NOT NULL,
  lines_of_code BIGINT,
  lines_of_comments BIGINT,
  number_of_namespaces BIGINT,
  number_of_classes BIGINT,
- PRIMARY KEY(project_id,update_date)
+ UNIQUE(project_id,update_date)
  );
  
  CREATE TABLE class_metrics(
  class_id BIGSERIAL PRIMARY KEY,
- project_id BIGINT REFERENCES project(project_id),
+ general_metrics_id BIGINT REFERENCES general_metrics(general_metrics_id) NOT NULL,
  class_name VARCHAR(100) NOT NULL,
- update_date TIMESTAMP NOT NULL,
  lines_of_code BIGINT,
  lines_of_comments BIGINT,
  number_of_childrens BIGINT,
  depth_of_inheritance BIGINT,
  weighted_methods BIGINT,
- UNIQUE(class_name,project_id,update_date)
+ UNIQUE(class_name,general_metrics_id)
  );
  
  CREATE TABLE method_metrics(
  class_id BIGINT REFERENCES class_metrics(class_id) NOT NULL,
  method_name VARCHAR(200) NOT NULL,
- update_date TIMESTAMP NOT NULL,
  lines_of_code BIGINT,
  lines_of_comments BIGINT,
  nested_block_depths BIGINT,
- PRIMARY KEY(method_name,update_date,class_id)
+ PRIMARY KEY(method_name,class_id)
  );
  
  -- insert test data
@@ -74,17 +73,17 @@
  (DEFAULT, 'test project', '2020-04-16 18:10:45', '2020-04-18 18:50:55', 'test@gmail.com', 1),
  (DEFAULT, 'another test project', '2020-04-17 12:10:45', '2020-04-17 12:10:45', 'test@gmail.com', 1);
  
- INSERT INTO general_metrics(project_id, update_date, lines_of_code, lines_of_comments, number_of_namespaces, number_of_classes) VALUES
- (1, '2020-04-16 18:10:45', 560, 60, 5, 1),
- (1, '2020-04-18 18:50:55', 1890, 150, 7, 2);
+ INSERT INTO general_metrics(general_metrics_id,project_id, update_date, lines_of_code, lines_of_comments, number_of_namespaces, number_of_classes) VALUES
+ (DEFAULT, 1, '2020-04-16 18:10:45', 560, 60, 5, 1),
+ (DEFAULT, 1, '2020-04-18 18:50:55', 1890, 150, 7, 2);
  
- INSERT INTO class_metrics(class_id, class_name, update_date, project_id, lines_of_code, lines_of_comments, number_of_childrens, depth_of_inheritance, weighted_methods) VALUES
- (DEFAULT, 'first class', '2020-04-16 18:10:45', 1, 560, 60, 0, 2, 3),
- (DEFAULT, 'first class', '2020-04-18 18:50:55', 1, 860, 80, 1, 3, 4),
- (DEFAULT, 'second class', '2020-04-18 18:50:55', 1, 1030, 70, 0, 2, 2);
+ INSERT INTO class_metrics(class_id, class_name, general_metrics_id, lines_of_code, lines_of_comments, number_of_childrens, depth_of_inheritance, weighted_methods) VALUES
+ (DEFAULT, 'first class', 1, 560, 60, 0, 2, 3),
+ (DEFAULT, 'first class', 2, 860, 80, 1, 3, 4),
+ (DEFAULT, 'second class', 2, 1030, 70, 0, 2, 2);
  
- INSERT INTO method_metrics(method_name, update_date, class_id, lines_of_code, lines_of_comments, nested_block_depths) VALUES
- ('main', '2020-04-16 18:10:45', 1, 560, 60, 3),
- ('main', '2020-04-18 18:50:55', 2, 560, 60, 3),
- ('some function', '2020-04-18 18:50:55', 2, 300, 20, 1),
- ('print some values', '2020-04-18 18:50:55', 3, 1030, 70, 2);
+ INSERT INTO method_metrics(method_name, class_id, lines_of_code, lines_of_comments, nested_block_depths) VALUES
+ ('main', 1, 560, 60, 3),
+ ('main', 2, 560, 60, 3),
+ ('some function', 2, 300, 20, 1),
+ ('print some values', 3, 1030, 70, 2);
