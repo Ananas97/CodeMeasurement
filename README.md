@@ -19,7 +19,10 @@ Tools needed to develop the application
  
 ## how to configure the project on a developer's machine (database, webserver, etc.)
 ## how to run tests
-## how to deploy the application to production
+
+How to deploy the application to production
+-------------
+The application will be deployed on Azure Apps Service, when it comes to CI/CD it uses the following configuration: CI with GitHub (production branch) and App Service build service.
 
 [1]: https://api.figma.com
 [2]: https://visualstudio.microsoft.com/pl/
