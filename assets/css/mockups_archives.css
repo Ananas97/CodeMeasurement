@@ -1,0 +1,767 @@
+/* Frame 1 */
+
+position: relative;
+width: 1440px;
+height: 1024px;
+
+background: #FFFFFF;
+/* Group 12 */
+position: absolute;
+width: 1025px;
+height: 37px;
+left: 215px;
+top: 184px;
+/* PROJECT NAME */
+position: absolute;
+width: 224px;
+height: 37px;
+left: 215px;
+top: 184px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* UPLOADED BY */
+position: absolute;
+width: 224px;
+height: 37px;
+left: 590px;
+top: 184px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* UPLOAD DATE */
+position: absolute;
+width: 224px;
+height: 37px;
+left: 1016px;
+top: 184px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* URL */
+position: absolute;
+width: 224px;
+height: 48px;
+left: 622px;
+top: 245px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Group 15 */
+position: absolute;
+width: 1109px;
+height: 497px;
+left: 132px;
+top: 310px;
+/* Line 3 */
+position: absolute;
+width: 1026px;
+height: 10px;
+left: 215px;
+top: 360px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
+/* Group 5 */
+position: absolute;
+width: 407px;
+height: 41px;
+left: 215px;
+top: 384px;
+/* Group 3 */
+position: absolute;
+width: 98px;
+height: 41px;
+left: 215px;
+top: 384px;
+/* Rectangle 1 */
+position: absolute;
+width: 98px;
+height: 41px;
+right: 1127px;
+top: calc(50% - 41px/2 - 107.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* CS */
+position: absolute;
+width: 23px;
+height: 21px;
+right: 1164px;
+top: calc(50% - 21px/2 - 107.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* YAML */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 1022px;
+top: calc(50% - 21px/2 - 107.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* CSS */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 920px;
+top: calc(50% - 21px/2 - 107.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* JS */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 818px;
+top: calc(50% - 21px/2 - 107.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Group 9 */
+position: absolute;
+width: 476px;
+height: 307px;
+left: 215px;
+top: 500px;
+/* Lines of code */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 252px;
+top: 610px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Update Date */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 252px;
+top: 570px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of comments */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 252px;
+top: 735px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of classes */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 252px;
+top: 695px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of namespaces */
+position: absolute;
+width: 203px;
+height: 28px;
+left: 252px;
+top: 650px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Rectangle 4 */
+position: absolute;
+width: 450px;
+height: 286px;
+left: 241px;
+top: 521px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+filter: blur(4px);
+/* Group 3 */
+position: absolute;
+width: 172px;
+height: 41px;
+left: 215px;
+top: 500px;
+/* Rectangle 1 */
+position: absolute;
+width: 172px;
+height: 41px;
+right: 1053px;
+top: calc(50% - 41px/2 + 8.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* General Metrics */
+position: absolute;
+width: 126px;
+height: 21px;
+right: 1071px;
+top: calc(50% - 21px/2 + 7.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* 21/04/2020 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 526px;
+top: 571px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 526px;
+top: 651px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 100 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 526px;
+top: 607px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 526px;
+top: 732px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 526px;
+top: 691px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 10 */
+position: absolute;
+width: 478px;
+height: 306px;
+left: 763px;
+top: 501px;
+/* Group 8 */
+position: absolute;
+width: 478px;
+height: 306px;
+left: 763px;
+top: 501px;
+/* Lines of code */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 800px;
+top: 611px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Update Date */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 800px;
+top: 571px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of comments */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 800px;
+top: 651px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of children */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 800px;
+top: 691px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Depth of inheritance tree */
+position: absolute;
+width: 225px;
+height: 28px;
+left: 800px;
+top: 731px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Rectangle 5 */
+position: absolute;
+width: 450px;
+height: 286px;
+left: 791px;
+top: 521px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+filter: blur(4px);
+/* Group 7 */
+position: absolute;
+width: 274px;
+height: 41px;
+left: 763px;
+top: 501px;
+/* Rectangle 1 */
+position: absolute;
+width: 274px;
+height: 41px;
+right: 403px;
+top: calc(50% - 41px/2 + 9.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* Class HelloWorld Metrics */
+position: absolute;
+width: 202px;
+height: 21px;
+right: 447px;
+top: calc(50% - 21px/2 + 8.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Weighed methods */
+position: absolute;
+width: 225px;
+height: 28px;
+left: 800px;
+top: 771px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 21/04/2020 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1066px;
+top: 571px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1066px;
+top: 660px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 100 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1066px;
+top: 616px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1066px;
+top: 741px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1066px;
+top: 700px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 13 */
+position: absolute;
+width: 1040px;
+height: 50px;
+left: 132px;
+top: 310px;
+/* HelloWorld */
+position: absolute;
+width: 210px;
+height: 48px;
+left: 215px;
+top: 312px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Line 3 */
+position: absolute;
+width: 39px;
+height: 10px;
+left: 132px;
+top: 324px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
+/* 24/04/2020 */
+position: absolute;
+width: 145px;
+height: 26px;
+left: 1027px;
+top: 316px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* manually */
+position: absolute;
+width: 94px;
+height: 28px;
+left: 605px;
+top: 310px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Test */
+position: absolute;
+width: 224px;
+height: 48px;
+left: 217px;
+top: 245px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Group 14 */
+position: absolute;
+width: 1040px;
+height: 39px;
+left: 132px;
+top: 245px;
+/* Group 11 */
+position: absolute;
+width: 39px;
+height: 39px;
+left: 132px;
+top: 245px;
+/* Line 5 */
+position: absolute;
+width: 39px;
+height: 10px;
+left: 151px;
+top: 245px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
+transform: rotate(90deg);
+/* Line 4 */
+position: absolute;
+width: 39px;
+height: 10px;
+left: 132px;
+top: 265px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
+/* 24/04/2020 */
+position: absolute;
+width: 145px;
+height: 26px;
+left: 1027px;
+top: 247px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Group 16 */
+position: absolute;
+width: 1320px;
+height: 59px;
+left: 60px;
+top: 25px;
+/* Code Measurement */
+position: absolute;
+width: 118px;
+height: 42px;
+left: 60px;
+top: calc(50% - 42px/2 - 466px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 3 */
+position: absolute;
+width: 345px;
+height: 42px;
+left: 553px;
+top: 37px;
+/* Archives */
+position: absolute;
+width: 100px;
+height: 42px;
+left: calc(50% - 100px/2 - 117px);
+top: calc(50% - 42px/2 - 454px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Perform analysis */
+position: absolute;
+width: 200px;
+height: 42px;
+left: calc(50% - 200px/2 + 78px);
+top: calc(50% - 42px/2 - 454px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 4 */
+position: absolute;
+width: 172px;
+height: 41px;
+left: 1208px;
+top: 25px;
+/* Rectangle 1 */
+position: absolute;
+width: 172px;
+height: 41px;
+right: 60px;
+top: calc(50% - 41px/2 - 466.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* Log out */
+position: absolute;
+width: 61px;
+height: 21px;
+right: 116px;
+top: calc(50% - 21px/2 - 466.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Line 3 */
+position: absolute;
+width: 138px;
+height: 10px;
+left: 515px;
+top: 74px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);

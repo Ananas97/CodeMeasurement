@@ -1,0 +1,734 @@
+/* Frame 1 */
+
+position: relative;
+width: 1440px;
+height: 1024px;
+
+background: #FFFFFF;
+/* Group 6 */
+position: absolute;
+width: 503px;
+height: 492px;
+left: 206px;
+top: 127px;
+/* Name your project */
+position: absolute;
+width: 238px;
+height: 48px;
+left: 206px;
+top: 127px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+
+color: #000000;
+/* Group 4 */
+position: absolute;
+width: 503px;
+height: 165px;
+left: 206px;
+top: 199px;
+/* Rectangle 2 */
+position: absolute;
+width: 503px;
+height: 165px;
+left: 206px;
+top: 199px;
+
+background: #FFFFFF;
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+filter: blur(4px);
+/* Group 3 */
+position: absolute;
+width: 366px;
+height: 21px;
+left: 302px;
+top: 307px;
+/* or drag & drop them */
+position: absolute;
+width: 225px;
+height: 21px;
+left: 443px;
+top: 307px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+text-align: center;
+
+color: #C4C4C4;
+/* Choose project files */
+position: absolute;
+width: 162px;
+height: 21px;
+left: 302px;
+top: 307px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+text-align: center;
+
+color: #000000;
+/* Line 1 */
+position: absolute;
+width: 93.01px;
+height: 0px;
+left: 420px;
+top: 281px;
+
+border: 1px solid #B6B3B3;
+transform: rotate(-0.62deg);
+/* Arrow 1 */
+position: absolute;
+width: 40px;
+height: 0px;
+left: 466px;
+top: 230px;
+
+border: 1px solid #B6B3B3;
+box-sizing: border-box;
+backdrop-filter: blur(4px);
+/* Note: backdrop-filter has minimal browser support */
+transform: rotate(90deg);
+/* Project URL */
+position: absolute;
+width: 98px;
+height: 28px;
+left: 217px;
+top: 417px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Rectangle 3 */
+position: absolute;
+width: 372px;
+height: 32px;
+left: 337px;
+top: 413px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+/* Line 3 */
+position: absolute;
+width: 492px;
+height: 10px;
+left: 217px;
+top: 481px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
+/* Group 5 */
+position: absolute;
+width: 407px;
+height: 41px;
+left: 217px;
+top: 498px;
+/* Group 3 */
+position: absolute;
+width: 98px;
+height: 41px;
+left: 217px;
+top: 498px;
+/* Rectangle 1 */
+position: absolute;
+width: 98px;
+height: 41px;
+right: 1125px;
+top: calc(50% - 41px/2 + 6.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* CS */
+position: absolute;
+width: 23px;
+height: 21px;
+right: 1162px;
+top: calc(50% - 21px/2 + 6.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* YAML */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 1020px;
+top: calc(50% - 21px/2 + 6.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* CSS */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 918px;
+top: calc(50% - 21px/2 + 6.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* JS */
+position: absolute;
+width: 59px;
+height: 21px;
+right: 816px;
+top: calc(50% - 21px/2 + 6.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Group 3 */
+position: absolute;
+width: 172px;
+height: 41px;
+left: 537px;
+top: 578px;
+/* Rectangle 1 */
+position: absolute;
+width: 172px;
+height: 41px;
+right: 731px;
+top: calc(50% - 41px/2 + 86.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* Analyse */
+position: absolute;
+width: 64px;
+height: 21px;
+right: 784px;
+top: calc(50% - 21px/2 + 86.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Group 10 */
+position: absolute;
+width: 476px;
+height: 307px;
+left: 180px;
+top: 656px;
+/* Lines of code */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 217px;
+top: 766px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Update Date */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 217px;
+top: 726px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of comments */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 217px;
+top: 891px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of classes */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 217px;
+top: 851px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of namespaces */
+position: absolute;
+width: 203px;
+height: 28px;
+left: 217px;
+top: 806px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Rectangle 4 */
+position: absolute;
+width: 450px;
+height: 286px;
+left: 206px;
+top: 677px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+filter: blur(4px);
+/* Group 3 */
+position: absolute;
+width: 172px;
+height: 41px;
+left: 180px;
+top: 656px;
+/* Rectangle 1 */
+position: absolute;
+width: 172px;
+height: 41px;
+right: 1088px;
+top: calc(50% - 41px/2 + 164.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* General Metrics */
+position: absolute;
+width: 126px;
+height: 21px;
+right: 1106px;
+top: calc(50% - 21px/2 + 163.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* 21/04/2020 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 491px;
+top: 727px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 491px;
+top: 807px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 100 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 491px;
+top: 763px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 491px;
+top: 888px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 491px;
+top: 847px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 9 */
+position: absolute;
+width: 478px;
+height: 306px;
+left: 820px;
+top: 657px;
+/* Group 8 */
+position: absolute;
+width: 478px;
+height: 306px;
+left: 820px;
+top: 657px;
+/* Lines of code */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 857px;
+top: 767px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Update Date */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 857px;
+top: 727px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of comments */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 857px;
+top: 807px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Number of children */
+position: absolute;
+width: 179px;
+height: 28px;
+left: 857px;
+top: 847px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Depth of inheritance tree */
+position: absolute;
+width: 225px;
+height: 28px;
+left: 857px;
+top: 887px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Rectangle 5 */
+position: absolute;
+width: 450px;
+height: 286px;
+left: 848px;
+top: 677px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+filter: blur(4px);
+/* Group 7 */
+position: absolute;
+width: 274px;
+height: 41px;
+left: 820px;
+top: 657px;
+/* Rectangle 1 */
+position: absolute;
+width: 274px;
+height: 41px;
+right: 346px;
+top: calc(50% - 41px/2 + 165.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* Class HelloWorld Metrics */
+position: absolute;
+width: 202px;
+height: 21px;
+right: 390px;
+top: calc(50% - 21px/2 + 164.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Weighed methods */
+position: absolute;
+width: 225px;
+height: 28px;
+left: 857px;
+top: 927px;
+
+font-family: Roboto;
+font-style: italic;
+font-weight: bold;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 21/04/2020 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1123px;
+top: 727px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1123px;
+top: 816px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 100 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1123px;
+top: 772px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1123px;
+top: 897px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* 2 */
+position: absolute;
+width: 128px;
+height: 17px;
+left: 1123px;
+top: 856px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 11 */
+position: absolute;
+width: 1320px;
+height: 59px;
+left: 60px;
+top: 25px;
+/* Code Measurement */
+position: absolute;
+width: 118px;
+height: 42px;
+left: 60px;
+top: calc(50% - 42px/2 - 466px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 1 */
+position: absolute;
+width: 345px;
+height: 42px;
+left: 553px;
+top: 37px;
+/* Archives */
+position: absolute;
+width: 100px;
+height: 42px;
+left: calc(50% - 100px/2 - 117px);
+top: calc(50% - 42px/2 - 454px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Perform analysis */
+position: absolute;
+width: 200px;
+height: 42px;
+left: calc(50% - 200px/2 + 78px);
+top: calc(50% - 42px/2 - 454px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #000000;
+/* Group 2 */
+position: absolute;
+width: 172px;
+height: 41px;
+left: 1208px;
+top: 25px;
+/* Rectangle 1 */
+position: absolute;
+width: 172px;
+height: 41px;
+right: 60px;
+top: calc(50% - 41px/2 - 466.5px);
+
+background: #FCFBFB;
+border: 1px solid #00E64D;
+box-sizing: border-box;
+filter: blur(4px);
+/* Log out */
+position: absolute;
+width: 61px;
+height: 21px;
+right: 116px;
+top: calc(50% - 21px/2 - 466.5px);
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+/* identical to box height */
+color: #00E64D;
+/* Line 2 */
+position: absolute;
+width: 138px;
+height: 10px;
+left: 698px;
+top: 74px;
+
+border: 1px solid #00E64D;
+filter: blur(4px);
