@@ -11,11 +11,13 @@ static class MeasurementsDemo
 
         Measurement LoC = new LinesOfCode(ProjectPath);
         Measurement NoC = new NumberOfClasses(ProjectPath);
+        Measurement NoComments = new LinesOfComments(ProjectPath);
 
         Console.WriteLine();
         Console.WriteLine("RESULTS");
         Console.WriteLine("LOC: " + LoC.Result);
         Console.WriteLine("NOC: " + NoC.Result);
+        Console.WriteLine("NoComments: " + NoComments.Result);
     }
 
 }
