@@ -8,6 +8,7 @@ namespace CodeMeasurement
         static void Main(string[] args)
         {
             MeasurementsDemo.main();
+            Console.ReadLine();
         }
     }
 }
