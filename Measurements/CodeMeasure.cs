@@ -6,6 +6,7 @@ using CodeMeasurement.Measurements.StorageObjects;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
+using System.Xml;
 
 namespace CodeMeasurement.Measurements
 {
@@ -30,9 +31,9 @@ namespace CodeMeasurement.Measurements
                 generalMetric.NumberOfLines += CalculateLinesOfCode(fileContent);
                 generalMetric.NumberOfComments += CalculateLinesOfComments(fileContent);
                 CatchClass(fileContent, file);
-                foreach (ClassMetric classMetric in generalMetric.ClassMetricList) {
-                    CatchFunction(classMetric, file);                   
-                }
+//                foreach (ClassMetric classMetric in generalMetric.ClassMetricList) {
+//                    CatchFunction(classMetric, file);                   
+//                }
             }
         }
 
@@ -44,27 +45,30 @@ namespace CodeMeasurement.Measurements
         private void CatchClass(string[] fileContent, string filePath)
         {
             Regex rg = new Regex(@" class ", RegexOptions.IgnoreCase);
-            Regex rgStartingBrace = new Regex("{(?=[^\"]*(?:\"[^\"]*\"[^\"]*)*$)", RegexOptions.IgnoreCase);
-            Regex rgClosingBrace = new Regex("}(?=[^\"]*(?:\"[^\"]*\"[^\"]*)*$)", RegexOptions.IgnoreCase);
+            Regex rgStartingBrace = new Regex("{", RegexOptions.IgnoreCase);
+            Regex rgClosingBrace = new Regex("}", RegexOptions.IgnoreCase);
 
             Boolean in_class = false;
             int brace_counter = 0;
             string name = "default";
-            int counter = 0, start;
-            ClassMetric currentClassMetric = new ClassMetric(0, 0, "", "");
+            int counter = 1, start = 0;
+            //ClassMetric currentClassMetric = new ClassMetric(0, 0, "", "");
 
             foreach (string line in fileContent)
             {
                 if (!in_class)
                 {
+                    // look for a begning of a class
                     if (rg.IsMatch(line))
                     {
+                        Console.WriteLine("I've found a class!");
+                        // save starting line
                         start = counter;
-                        name = Regex.Match(line, @"class\S*(?:\s\S+)?", RegexOptions.IgnoreCase).ToString().Substring(6);
-                        Console.WriteLine(name);
+                        // save name of the class 
+                        // name = Regex.Match(line, @"class\S*(?:\s\S+)?", RegexOptions.IgnoreCase).ToString().Substring(6);
+                        name = Regex.Match(line, @"class\s*([\S\d]+)\s*(?:\s*[\S\d]+)?", RegexOptions.IgnoreCase).Groups[1].Value;
                         in_class = true;
-                        currentClassMetric = new ClassMetric(start, counter, name, filePath);
-                        generalMetric.ClassMetricList.Add(currentClassMetric);
+
                     }
                 }
                 else // we are in the class body
@@ -78,9 +82,10 @@ namespace CodeMeasurement.Measurements
                         if (c > 0) 
                         { 
                             brace_counter -= c;
+                            // check if we made it to the end of class
                             if (brace_counter <= 0)
                             {
-                                currentClassMetric.end = counter;
+                                AddClassMetric(start, counter, name, filePath);
                                 in_class = false;
                             }
                         }
@@ -94,12 +99,12 @@ namespace CodeMeasurement.Measurements
                         if (c > 0) { brace_counter -= c; Console.WriteLine(brace_counter + " " + line); }
                         
                         if (brace_counter <= 0) // we made it to the end of the class!
-                        { 
-                            currentClassMetric.end = counter;
+                        {
+                            AddClassMetric(start, counter, name, filePath);
                             in_class = false;
                         }
                     }
-                    currentClassMetric.content.Add(line);
+                    //currentClassMetric.content.Add(line);
                 }
                 counter++;
             }
@@ -130,8 +135,8 @@ namespace CodeMeasurement.Measurements
                         Console.WriteLine("I've found a function!");
                         start = counter;
                         // this will hopefully return the name of the function
-                        name = Regex.Match(line, @"\s*<func>\(.*\)\s*\n*{", RegexOptions.IgnoreCase).Groups["func"].Value;
-                        Console.WriteLine(name);
+                        name = Regex.Match(line, @"(.*)\s*\(.*\)\s*\n*{", RegexOptions.IgnoreCase).Groups[1].Value;
+                        Console.WriteLine("name: " + name);
 
                         in_function = true;
 
@@ -225,6 +230,11 @@ namespace CodeMeasurement.Measurements
             }
 
             return files;
+        }
+
+        private void AddClassMetric(int begin, int end, string name, string filePath) {
+            var classMetric = new ClassMetric(begin, end, name, filePath);
+            generalMetric.ClassMetricList.Add(classMetric);
         }
 
     }
