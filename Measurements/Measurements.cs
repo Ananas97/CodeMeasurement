@@ -4,7 +4,7 @@ using System.IO;
 static class MeasurementsDemo
 {
     //private static string ProjectPath = Directory.GetCurrentDirectory(); 
-    private static string ProjectPath = "G:\\Studia\\SE1\\TSD\\CodeMeasurement\\Measurements";
+    private static string ProjectPath = "C:\\Users\\Pawe³\\source\\repos\\CodeMeasurement\\Measurements\\demo";
     public static void main() {
 
         CodeMeasurement.Measurements.CodeMeasure codeMeasure = new CodeMeasurement.Measurements.CodeMeasure(ProjectPath);
@@ -15,6 +15,17 @@ static class MeasurementsDemo
         }
 
         codeMeasure.GoThroughGeneralMetric();
+
+        Console.WriteLine("Classes: ");
+        foreach (var clazz in codeMeasure.generalMetric.ClassMetricList)
+        {
+            Console.WriteLine(clazz.begin + " " + clazz.end + " " + clazz.name + " " + clazz.content[0]);
+            foreach (var func in clazz.FunctionMetricList)
+            {
+                Console.WriteLine("\t" + func.begin + " " + func.end + " " + func.name + " " + func.content[0]);
+            }
+        }
+
 
         Console.WriteLine("Code: " + codeMeasure.generalMetric.NumberOfLines);
         Console.WriteLine("Comments: " + codeMeasure.generalMetric.NumberOfComments);
