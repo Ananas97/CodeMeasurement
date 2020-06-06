@@ -19,7 +19,7 @@ static class MeasurementsDemo
         Console.WriteLine("Classes: ");
         foreach (var clazz in codeMeasure.generalMetric.ClassMetricList)
         {
-            Console.WriteLine(clazz.begin + " " + clazz.end + " " + clazz.name + " " + clazz.content[0]);
+            Console.WriteLine(clazz.begin + " " + clazz.end + " " + clazz.name);
             foreach (var func in clazz.FunctionMetricList)
             {
                 Console.WriteLine("\t" + func.begin + " " + func.end + " " + func.name + " " + func.content[0]);
