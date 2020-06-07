@@ -8,6 +8,5 @@ namespace CodeMeasurement.Measurements.StorageObjects
     {
         public List<ClassMetric> ClassMetricList = new List<ClassMetric>();
         public int NumberOfLines, NumberOfComments, NumberOfNamespaces, NumberOfClasses;
-        
     }
 }

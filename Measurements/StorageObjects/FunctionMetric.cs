@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace CodeMeasurement.Measurements.StorageObjects
 {
-    class FunctionMetric
+    class FunctionMetric : MetricContent
     {
-        public int NumberOfLines, NumberOfComments, NestedBlockDepth, begin, end;
-        public string name, filePath;
-        public List<string> content = new List<string>();
+        public int NumberOfLines, NumberOfComments, NestedBlockDepth;
 
-        public FunctionMetric(int begin, int end, string name, string filePath)
-        {
-            this.begin = begin;
-            this.end = end;
-            this.name = name;
-            this.filePath = filePath;
+        public FunctionMetric(int begin, int end, string name, string filePath) : base(begin, end, name, filePath) 
+        { 
+        
         }
     }
 }

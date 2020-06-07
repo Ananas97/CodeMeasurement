@@ -5,18 +5,23 @@ namespace CodeMeasurement.Measurements
 {
     class democlass : Class1
     {
-        public democlass(string ProjectPath)
+
+        public democlass(string ProjectPath) 
         {
             Console.WriteLine("wow");
         }
 
-        public void GoThroughGeneralMetric()
-        {
+        public void GoThroughClassMetric() {
+            double lelelele;
+        }
+
+        public void GoThroughGeneralMetric() {
             int lalalal;
         }
 
-        public void GoThroughClassMetric() {
+        public void GoThroughruru() {
             double lelelele;
+            GoThroughGeneralMetric();
         }
     }
 }
