@@ -15,7 +15,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
             cultureName = "de-DE";
         }
 
-        public bool loginUser(string email, string password)
+        public bool loginUser(string email, string password) // working
         {
             bool result;
             using (var connection = new NpgsqlConnection(connectionString))
@@ -39,7 +39,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return result;
         }
 
-        public bool registerUser(string email, string password, string name)
+        public bool registerUser(string email, string password, string name) // working
         {
             bool result;
             using (var connection = new NpgsqlConnection(connectionString))
@@ -63,49 +63,47 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return result;
         }
 
-        public string saveProject(string name, string email, string sourceName)
+        public string saveProject(string name, string email, string sourceName) // working
         {
             string result = "";
             using (var connection = new NpgsqlConnection(connectionString))
             {
-                try
-                {
                     connection.Open();
-                    string sourceId = getSourceIdFromName(connection, sourceName);
+                    long sourceId = getSourceIdFromName(sourceName);
                     var sqlStatement = "INSERT INTO project(project_id, name, creation_date, last_update_date, email, source_id)" +
-                        "values(DEFAULT, @name, @creation_date, @last_update_date, @email, @source_id)" +
+                    "values(DEFAULT, @name, @creation_date, @last_update_date, @email, @source_id)" +
                         "RETURNING project_id";
                     var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                     sqlCommand.Parameters.AddWithValue("name", name);
-                    sqlCommand.Parameters.AddWithValue("creation_date", localDate.ToString(cultureName));
-                    sqlCommand.Parameters.AddWithValue("last_update_date", localDate.ToString(cultureName));
+                    sqlCommand.Parameters.AddWithValue("creation_date", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("last_update_date", DateTime.Now);
                     sqlCommand.Parameters.AddWithValue("email", email);
                     sqlCommand.Parameters.AddWithValue("source_id", sourceId);
+
                     var execution = sqlCommand.ExecuteScalar();
                     result = execution.ToString();
                     connection.Close();
-                } catch {}
             }
             return result;
         }
 
-        private string getSourceIdFromName(NpgsqlConnection connection, string sourceName)
+        private long getSourceIdFromName(string sourceName) // working
         {
-            string sourceId;
-            using (connection)
+            long sourceId = 0;
+            using (var connection = new NpgsqlConnection(connectionString))
             {
+                connection.Open();
                 var sqlStatement = "SELECT source_id FROM project_source WHERE source_name = @source_name";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                 sqlCommand.Parameters.AddWithValue("source_name", sourceName);
-                try
+
+                NpgsqlDataReader reader = sqlCommand.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    var execution = sqlCommand.ExecuteScalar();
-                    sourceId = execution.ToString();
+                    sourceId = reader.GetInt64(0);
                 }
-                catch
-                {
-                    sourceId = "";
-                }
+                connection.Close();
             }
             return sourceId;
         }
@@ -123,7 +121,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     sqlCommand.Parameters.AddWithValue("last_update_date", localDate.ToString(cultureName));
                     sqlCommand.Parameters.AddWithValue("project_id", project_id.ToString());
                     sqlCommand.ExecuteScalar();
-                    result = saveGeneralMetric(connection, generalMetric, project_id);
+                    result = saveGeneralMetric(generalMetric, project_id);
                 }
                 catch
                 {
@@ -134,12 +132,13 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return result;
         }
 
-        private bool saveGeneralMetric(NpgsqlConnection connection, GeneralMetric generalMetric, int project_id)
+        private bool saveGeneralMetric(GeneralMetric generalMetric, int project_id)
         {
             bool result = true;
 
-            using (connection)
+            using (var connection = new NpgsqlConnection(connectionString))
             {
+                connection.Open();
                 var sqlStatement = "INSERT INTO general_metrics(general_metrics_id, project_id, update_date" +
                     "lines_of_code, lines_of_comments, number_of_namespaces, number_of_classes) values(" +
                     "DEFAULT, @project_id, @update_date, @lines_of_code, @lines_of_comments, @number_of_namespaces, @number_of_classes) " +
@@ -157,21 +156,23 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     string generalMetricsId = execution.ToString();
                     foreach (ClassMetric classMetric in generalMetric.ClassMetricList)
                     {
-                        result = (saveClassMetric(connection, classMetric, generalMetricsId) && result);
+                        result = (saveClassMetric(classMetric, generalMetricsId) && result);
                     }
                 } catch
                 {
                     result = false;
                 }
+                connection.Close();
             }
             return result;
         }
 
-        private bool saveClassMetric(NpgsqlConnection connection, ClassMetric classMetric, string generalMetricsId)
+        private bool saveClassMetric(ClassMetric classMetric, string generalMetricsId)
         {
             bool result = true;
-            using (connection)
+            using (var connection = new NpgsqlConnection(connectionString))
             {
+                connection.Open();
                 var sqlStatement = "INSERT INTO class_metrics(class_id, general_metrics_id, class_name, lines_of_code, lines_of_comments" +
                     "number_of_childrens, depth_of_inheritance, weighted_methods) values(DEFAULT, @general_metrics_id, @class_name, " +
                     "@lines_of_code, @lines_of_comments, @number_of_childrens, @depth_of_inheritance)" +
@@ -189,23 +190,24 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     string classMetricsId = execution.ToString();
                     foreach(FunctionMetric functionMetric in classMetric.FunctionMetricList)
                     {
-                        result = (saveFunctionMetric(connection, functionMetric, classMetricsId) && result);
+                        result = (saveFunctionMetric(functionMetric, classMetricsId) && result);
                     }
                 }
                 catch
                 {
                     result = false;
                 }
-
+                connection.Close();
             }
             return result;
         }
 
-        private bool saveFunctionMetric(NpgsqlConnection connection, FunctionMetric functionMetric, string classMetricsId)
+        private bool saveFunctionMetric(FunctionMetric functionMetric, string classMetricsId)
         {
             bool result = true;
-            using (connection)
+            using (var connection = new NpgsqlConnection(connectionString))
             {
+                connection.Open();
                 var sqlStatement = "INSERT INTO method_metrics(class_id, method_name, lines_of_code, lines_of_comments, nested_block_depths)" +
                     "values(@class_id, @method_name, @lines_of_code, @lines_of_comments, @nested_block_depths)";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
@@ -221,12 +223,13 @@ namespace CodeMeasurement.Measurements.StorageObjects
                 {
                     result = false;
                 }
+                connection.Close();
             }
             return result;
         }
 
 
-        public List<ProjectInfo> getEveryProjects(string email)
+        public List<ProjectInfo> getEveryProjects(string email) // working
         {
             List<ProjectInfo> projectList = new List<ProjectInfo>();
 
@@ -256,7 +259,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return projectList;
         }
 
-        private string getSourceName(int sourceId)
+        private string getSourceName(int sourceId) // working
         {
             string result = "";
 

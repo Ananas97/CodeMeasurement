@@ -11,11 +11,17 @@ static class MeasurementsDemo
 
         DatabaseManagement databaseManagement = new DatabaseManagement("Host=localhost;Username=postgres;Password=postgres;Database=postgres");
         List<ProjectInfo> projectInfo = databaseManagement.getEveryProjects("test@gmail.com");
-        Console.WriteLine("MEASUREMENTS");
-        foreach(ProjectInfo project in projectInfo)
-        {
-            Console.WriteLine(project.name + " " + project.source + " " + project.creationDate);
-        }
+        //Console.WriteLine("MEASUREMENTS");
+        //foreach(ProjectInfo project in projectInfo)
+        //{
+        //    Console.WriteLine(project.name + " " + project.source + " " + project.creationDate);
+        //}
+
+        //Console.WriteLine(databaseManagement.loginUser("XD", "XDD"));
+        //Console.WriteLine(databaseManagement.loginUser("test@gmail.com", "test123"));
+
+        Console.WriteLine(databaseManagement.saveProject("ucze sie java2", "test@gmail.com", "local source"));
+
         Console.ReadLine();
         //CodeMeasurement.Measurements.CodeMeasure codeMeasure = new CodeMeasurement.Measurements.CodeMeasure(ProjectPath);
 
