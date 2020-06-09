@@ -20,7 +20,28 @@ static class MeasurementsDemo
         //Console.WriteLine(databaseManagement.loginUser("XD", "XDD"));
         //Console.WriteLine(databaseManagement.loginUser("test@gmail.com", "test123"));
 
-        Console.WriteLine(databaseManagement.saveProject("ucze sie java2", "test@gmail.com", "local source"));
+        //Console.WriteLine(databaseManagement.saveProject("ucze sie java2", "test@gmail.com", "local source"));
+
+        GeneralMetric generalMetric = new GeneralMetric();
+        generalMetric.NumberOfClasses = 11;
+        generalMetric.NumberOfComments = 22;
+        generalMetric.NumberOfLines = 33;
+        generalMetric.NumberOfNamespaces = 44;
+
+        ClassMetric classMetric = new ClassMetric(0, 0, "test-1", "testtest");
+        classMetric.NumberOfChildrens = 12;
+        classMetric.NumberOfComments = 13;
+        classMetric.NumberOfLines = 14;
+        generalMetric.ClassMetricList.Add(classMetric);
+
+        ClassMetric classMetric2 = new ClassMetric(0, 0, "test-2", "testtest");
+        classMetric2.NumberOfChildrens = 22;
+        classMetric2.NumberOfComments = 23;
+        classMetric2.NumberOfLines = 24;
+        generalMetric.ClassMetricList.Add(classMetric2);
+
+
+        databaseManagement.saveMetrics(generalMetric, 7);
 
         Console.ReadLine();
         //CodeMeasurement.Measurements.CodeMeasure codeMeasure = new CodeMeasurement.Measurements.CodeMeasure(ProjectPath);

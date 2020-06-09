@@ -72,7 +72,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     long sourceId = getSourceIdFromName(sourceName);
                     var sqlStatement = "INSERT INTO project(project_id, name, creation_date, last_update_date, email, source_id)" +
                     "values(DEFAULT, @name, @creation_date, @last_update_date, @email, @source_id)" +
-                        "RETURNING project_id";
+                    "RETURNING project_id";
                     var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                     sqlCommand.Parameters.AddWithValue("name", name);
                     sqlCommand.Parameters.AddWithValue("creation_date", DateTime.Now);
@@ -108,9 +108,10 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return sourceId;
         }
 
-        public bool saveMetrics(GeneralMetric generalMetric, int project_id)
+        public bool saveMetrics(GeneralMetric generalMetric, int project_id) // working
         {
             bool result = true;
+            DateTime dateTime = DateTime.Now;
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
@@ -118,51 +119,54 @@ namespace CodeMeasurement.Measurements.StorageObjects
                 {
                     var sqlStatement = "UPDATE project SET last_update_date = @last_update_date WHERE project_id = @project_id";
                     var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-                    sqlCommand.Parameters.AddWithValue("last_update_date", localDate.ToString(cultureName));
-                    sqlCommand.Parameters.AddWithValue("project_id", project_id.ToString());
+                    sqlCommand.Parameters.AddWithValue("last_update_date", dateTime);
+                    sqlCommand.Parameters.AddWithValue("project_id", (long) project_id);
                     sqlCommand.ExecuteScalar();
-                    result = saveGeneralMetric(generalMetric, project_id);
                 }
                 catch
                 {
                     result = false;
                 }
                 connection.Close();
+                result = saveGeneralMetric(generalMetric, project_id, dateTime);
             }
             return result;
         }
 
-        private bool saveGeneralMetric(GeneralMetric generalMetric, int project_id)
+        private bool saveGeneralMetric(GeneralMetric generalMetric, int project_id, DateTime dateTime) // working 
         {
             bool result = true;
-
+            Console.WriteLine("HAAALOOO");
             using (var connection = new NpgsqlConnection(connectionString))
             {
+                Console.WriteLine("HALxO");
+
                 connection.Open();
-                var sqlStatement = "INSERT INTO general_metrics(general_metrics_id, project_id, update_date" +
-                    "lines_of_code, lines_of_comments, number_of_namespaces, number_of_classes) values(" +
-                    "DEFAULT, @project_id, @update_date, @lines_of_code, @lines_of_comments, @number_of_namespaces, @number_of_classes) " +
+                var sqlStatement = "INSERT INTO general_metrics(general_metrics_id, project_id, update_date," +
+                    "lines_of_code, lines_of_comments, number_of_classes) values(" +
+                    "DEFAULT, @project_id, @update_date, @lines_of_code, @lines_of_comments, @number_of_classes) " +
                     "RETURNING general_metrics_id";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-                sqlCommand.Parameters.AddWithValue("project_id", project_id.ToString());
-                sqlCommand.Parameters.AddWithValue("update_date", localDate.ToString(cultureName));
-                sqlCommand.Parameters.AddWithValue("lines_of_code", generalMetric.NumberOfLines.ToString());
-                sqlCommand.Parameters.AddWithValue("lines_of_comments", generalMetric.NumberOfComments.ToString());
-                sqlCommand.Parameters.AddWithValue("number_of_namespaces,", generalMetric.NumberOfNamespaces.ToString());
-                sqlCommand.Parameters.AddWithValue("number_of_classes", generalMetric.NumberOfClasses.ToString());
+
+                sqlCommand.Parameters.AddWithValue("project_id", (long) project_id);
+                sqlCommand.Parameters.AddWithValue("update_date", dateTime);
+                sqlCommand.Parameters.AddWithValue("lines_of_code", generalMetric.NumberOfLines);
+                sqlCommand.Parameters.AddWithValue("lines_of_comments", generalMetric.NumberOfComments);
+                //sqlCommand.Parameters.AddWithValue("namespaces,", generalMetric.NumberOfNamespaces);
+                sqlCommand.Parameters.AddWithValue("number_of_classes", generalMetric.NumberOfClasses);
                 try
                 {
-                    var execution = sqlCommand.ExecuteScalar();
-                    string generalMetricsId = execution.ToString();
+                string generalMetricsId = sqlCommand.ExecuteScalar().ToString();
+                connection.Close();
+
                     foreach (ClassMetric classMetric in generalMetric.ClassMetricList)
-                    {
-                        result = (saveClassMetric(classMetric, generalMetricsId) && result);
-                    }
+                {
+                    result = (saveClassMetric(classMetric, generalMetricsId) && result);
+                }
                 } catch
                 {
                     result = false;
                 }
-                connection.Close();
             }
             return result;
         }
