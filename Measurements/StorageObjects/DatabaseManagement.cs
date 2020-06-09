@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using System;
+using System.Collections.Generic;
 
 namespace CodeMeasurement.Measurements.StorageObjects
 {
@@ -225,7 +226,54 @@ namespace CodeMeasurement.Measurements.StorageObjects
         }
 
 
-        public void getProjectData()
+        public List<ProjectInfo> getEveryProjects(string email)
+        {
+            List<ProjectInfo> projectList = new List<ProjectInfo>();
+
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                var sqlStatement = "SELECT project_id, name, creation_date, last_update_date, source_id " +
+                    "FROM project WHERE email = @email";
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+                sqlCommand.Parameters.AddWithValue("email", email);
+                NpgsqlDataReader reader = sqlCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    projectList.Add(new ProjectInfo(reader.GetInt32(1), reader.GetInt32(5), reader.GetString(3),
+                          reader.GetString(4), email, reader.GetString(2)));
+                }
+
+                foreach(ProjectInfo projectInfo in projectList)
+                {
+                    projectInfo.name = getSourceName(connection, projectInfo.sourceId);
+                }
+
+                connection.Close();
+            }
+
+            return projectList;
+        }
+
+        private string getSourceName(NpgsqlConnection connection, int sourceId)
+        {
+            string result = "";
+
+            using (connection)
+            {
+                var sqlStatement = "SELECT source_name FROM project_source WHERE source_id = @source_id";
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+                sqlCommand.Parameters.AddWithValue("source_id", sourceId.ToString());
+
+                var execution = sqlCommand.ExecuteScalar();
+                result = execution.ToString();
+            }
+
+            return result;
+        }
+
+        public void getSpecificProjectInfo()
         {
 
         }
