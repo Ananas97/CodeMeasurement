@@ -241,13 +241,13 @@ namespace CodeMeasurement.Measurements.StorageObjects
 
                 while (reader.Read())
                 {
-                    projectList.Add(new ProjectInfo(reader.GetInt32(1), reader.GetInt32(5), reader.GetString(3),
-                          reader.GetString(4), email, reader.GetString(2)));
+                    projectList.Add(new ProjectInfo((int)reader.GetInt64(0), (int)reader.GetInt64(4), reader.GetDateTime(2),
+                          reader.GetDateTime(3), email, reader.GetString(1)));
                 }
 
-                foreach(ProjectInfo projectInfo in projectList)
+                foreach (ProjectInfo projectInfo in projectList)
                 {
-                    projectInfo.name = getSourceName(connection, projectInfo.sourceId);
+                    projectInfo.source = getSourceName(projectInfo.sourceId);
                 }
 
                 connection.Close();
@@ -256,18 +256,20 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return projectList;
         }
 
-        private string getSourceName(NpgsqlConnection connection, int sourceId)
+        private string getSourceName(int sourceId)
         {
             string result = "";
 
-            using (connection)
+            using (var connection = new NpgsqlConnection(connectionString))
             {
+                connection.Open();
                 var sqlStatement = "SELECT source_name FROM project_source WHERE source_id = @source_id";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-                sqlCommand.Parameters.AddWithValue("source_id", sourceId.ToString());
+                sqlCommand.Parameters.AddWithValue("source_id", sourceId);
 
                 var execution = sqlCommand.ExecuteScalar();
                 result = execution.ToString();
+                connection.Close();
             }
 
             return result;

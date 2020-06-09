@@ -8,10 +8,10 @@ namespace CodeMeasurement.Measurements.StorageObjects
     {
         public List<GeneralMetric> generalMetricList;
         public int projectId, sourceId;
-        public string creationDate, lastUpdateDate, name, email, source;
+        public string name, email, source;
+        public DateTime creationDate, lastUpdateDate;
 
-
-        public ProjectInfo(int projectId, int sourceId, string creationDate, string lastUpdateDate, string email, string name)
+        public ProjectInfo(int projectId, int sourceId, DateTime creationDate, DateTime lastUpdateDate, string email, string name)
         {
             generalMetricList = new List<GeneralMetric>();
             this.projectId = projectId;

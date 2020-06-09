@@ -1,4 +1,6 @@
+using CodeMeasurement.Measurements.StorageObjects;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 static class MeasurementsDemo
@@ -7,33 +9,41 @@ static class MeasurementsDemo
     private static string ProjectPath = "C:\\Users\\Pawe³\\source\\repos\\CodeMeasurement\\Measurements\\demo";
     public static void main() {
 
-        CodeMeasurement.Measurements.CodeMeasure codeMeasure = new CodeMeasurement.Measurements.CodeMeasure(ProjectPath);
-
-        foreach(string file in codeMeasure.Files)
+        DatabaseManagement databaseManagement = new DatabaseManagement("Host=localhost;Username=postgres;Password=postgres;Database=postgres");
+        List<ProjectInfo> projectInfo = databaseManagement.getEveryProjects("test@gmail.com");
+        Console.WriteLine("MEASUREMENTS");
+        foreach(ProjectInfo project in projectInfo)
         {
-            Console.WriteLine(file);
+            Console.WriteLine(project.name + " " + project.source + " " + project.creationDate);
         }
+        Console.ReadLine();
+        //CodeMeasurement.Measurements.CodeMeasure codeMeasure = new CodeMeasurement.Measurements.CodeMeasure(ProjectPath);
 
-        codeMeasure.GoThroughGeneralMetric();
+        //foreach(string file in codeMeasure.Files)
+        //{
+        //    Console.WriteLine(file);
+        //}
 
-        Console.WriteLine("Classes: ");
-        foreach (var clazz in codeMeasure.generalMetric.ClassMetricList)
-        {
-            Console.WriteLine(clazz.begin + " " + clazz.end + " " + clazz.name);
-            //Console.WriteLine("content:");
-            //clazz.PrintContent();
-            Console.WriteLine("\tFunctions: ");
-            foreach (var func in clazz.FunctionMetricList)
-            {
-                Console.WriteLine("\t" + func.begin + " " + func.end + " " + func.name);
-                Console.WriteLine("\tcontent:");
-                func.PrintContent();
-            }
-        }
+        //codeMeasure.GoThroughGeneralMetric();
+
+        //Console.WriteLine("Classes: ");
+        //foreach (var clazz in codeMeasure.generalMetric.ClassMetricList)
+        //{
+        //    Console.WriteLine(clazz.begin + " " + clazz.end + " " + clazz.name);
+        //    //Console.WriteLine("content:");
+        //    //clazz.PrintContent();
+        //    Console.WriteLine("\tFunctions: ");
+        //    foreach (var func in clazz.FunctionMetricList)
+        //    {
+        //        Console.WriteLine("\t" + func.begin + " " + func.end + " " + func.name);
+        //        Console.WriteLine("\tcontent:");
+        //        func.PrintContent();
+        //    }
+        //}
 
 
-        Console.WriteLine("Code: " + codeMeasure.generalMetric.NumberOfLines);
-        Console.WriteLine("Comments: " + codeMeasure.generalMetric.NumberOfComments);
+        //Console.WriteLine("Code: " + codeMeasure.generalMetric.NumberOfLines);
+        //Console.WriteLine("Comments: " + codeMeasure.generalMetric.NumberOfComments);
 
         //Console.WriteLine("Let's measure this project's code!");
         //Console.WriteLine();
