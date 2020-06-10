@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using System.Xml;
 using System.Linq;
+using NUnit.Framework.Constraints;
 
 namespace CodeMeasurement.Measurements
 {
@@ -55,9 +56,11 @@ namespace CodeMeasurement.Measurements
 
                 classMetric.DepthOfInheritance = CalculateDepthOfInheritence(classMetric);
                 classMetric.NumberOfChildrens = CalculateNumberOfChildren(classMetric);
-                classMetric.WeightedMethods = CalculateWeightedMethods(classMetric);
 
                 CatchFunctions(classMetric, classMetric.FilePath);
+
+                // WMS needs functions to be already catched
+                classMetric.WeightedMethods = CalculateWeightedMethods(classMetric);
             }
         }
 
@@ -362,19 +365,77 @@ namespace CodeMeasurement.Measurements
             return namespaces.Distinct().ToList().Count;
         }
 
-        private int CalculateDepthOfInheritence(ClassMetric classMetric) 
+        //private int CalculateDepthOfInheritence(ClassMetric root) 
+        //{
+        //    int maxDit = 0;
+        //    List<ClassMetric> children = new List<ClassMetric>();
+            
+        //    children.Add(root);
+        //    do
+        //    {
+        //        List<ClassMetric> nextChildren = new List<ClassMetric>();
+        //        foreach (ClassMetric child in children)
+        //        {
+        //            nextChildren = GetChildren(child);
+
+        //        }
+        //        children = nextChildren;
+        //    } 
+        //    while (children.Count > 0);
+        //}
+
+        private int CalculateDepthOfInheritence(ClassMetric root) 
         {
-            return 1;
+            // if there are some kids
+            if (GetChildren(root).Count > 0)
+            {
+                int maxDit = 0;
+                // check what's the bigges number of kids in kids :)
+                foreach (ClassMetric cm in GetChildren(root)) 
+                {
+                    if (CalculateDepthOfInheritence(cm) > maxDit) 
+                    {
+                        maxDit = CalculateDepthOfInheritence(cm);
+                    }
+                }
+                // add one more 'layer'
+                return maxDit + 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
+        private List<ClassMetric> GetChildren(ClassMetric parent) 
+        {
+            List<ClassMetric> chilldren = new List<ClassMetric>();
+            foreach (ClassMetric cm in generalMetric.ClassMetricList)
+            {
+                if (cm.NameOfSuperClass.Equals(parent.Name))
+                {
+                    chilldren.Add(cm);
+                }
+            }
+            return chilldren;
+        }
         private int CalculateNumberOfChildren(ClassMetric classMetric)
         {
-            return 1;
+            int noc = 0;
+            foreach (ClassMetric cm in generalMetric.ClassMetricList) 
+            {
+                if (cm.NameOfSuperClass.Equals(classMetric.Name))
+                {
+                    Console.WriteLine(classMetric.Name);
+                    noc++;
+                }
+            }
+            return noc;
         }
 
         private int CalculateWeightedMethods(ClassMetric classMetric)
         {
-            return 1;
+            return classMetric.FunctionMetricList.Count;
         }
 
         private int CalculateNestedBlockDepth(FunctionMetric functionMetric)
