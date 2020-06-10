@@ -182,7 +182,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 sqlCommand.Parameters.AddWithValue("general_metrics_id", long.Parse(generalMetricsId));
-                sqlCommand.Parameters.AddWithValue("class_name", classMetric.name);
+                sqlCommand.Parameters.AddWithValue("class_name", classMetric.Name);
                 sqlCommand.Parameters.AddWithValue("lines_of_code", classMetric.NumberOfLines);
                 sqlCommand.Parameters.AddWithValue("lines_of_comments", classMetric.NumberOfComments);
                 sqlCommand.Parameters.AddWithValue("number_of_childrens", classMetric.NumberOfChildrens);
@@ -219,7 +219,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     "values(@class_id, @method_name, @lines_of_code, @lines_of_comments, @nested_block_depths)";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                 sqlCommand.Parameters.AddWithValue("class_id", long.Parse(classMetricsId));
-                sqlCommand.Parameters.AddWithValue("method_name", functionMetric.name);
+                sqlCommand.Parameters.AddWithValue("method_name", functionMetric.Name);
                 sqlCommand.Parameters.AddWithValue("lines_of_code", functionMetric.NumberOfLines);
                 sqlCommand.Parameters.AddWithValue("lines_of_comments", functionMetric.NumberOfComments);
                 sqlCommand.Parameters.AddWithValue("nested_block_depths", functionMetric.NestedBlockDepth);
@@ -263,6 +263,8 @@ namespace CodeMeasurement.Measurements.StorageObjects
                 connection.Close();
             }
 
+            projectList = getSpecificProjectInfo(projectList);
+
             return projectList;
         }
 
@@ -285,9 +287,36 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return result;
         }
 
-        public void getSpecificProjectInfo()
+        private List<ProjectInfo> getSpecificProjectInfo(List<ProjectInfo> projectInfos)
         {
+            foreach (ProjectInfo project in projectInfos) {
+                using (var connection = new NpgsqlConnection(connectionString))
+                {
+                    connection.Open();
 
+                    var sqlStatement = "SELECT general_metrics_id, update_date, lines_of_code, lines_of_comments, number_of_classes " +
+                        "FROM general_metrics WHERE project_id = @project_id";
+                    var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+                    sqlCommand.Parameters.AddWithValue("project_id", (long) project.projectId);
+                    NpgsqlDataReader reader = sqlCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        GeneralMetric generalMetric = new GeneralMetric();
+                        generalMetric.generalMetricId = (int)reader.GetInt64(0);
+                        generalMetric.updateDate = reader.GetDateTime(1).ToString();
+                        generalMetric.NumberOfLines = reader.GetInt32(2);
+                        generalMetric.NumberOfComments = reader.GetInt32(3);
+                        generalMetric.NumberOfClasses = reader.GetInt32(4);
+                        generalMetric.NumberOfNamespaces = 3;
+
+
+                        project.generalMetricList.Add(generalMetric);
+                    }       
+                    connection.Close();
+                }
+            }
+
+                return projectInfos;
         }
     }
 }

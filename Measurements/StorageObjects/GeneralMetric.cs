@@ -7,6 +7,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
     class GeneralMetric
     {
         public List<ClassMetric> ClassMetricList = new List<ClassMetric>();
-        public int NumberOfLines, NumberOfComments, NumberOfNamespaces, NumberOfClasses;
+        public int NumberOfLines, NumberOfComments, NumberOfNamespaces, NumberOfClasses, generalMetricId;
+        public string updateDate;
     }
 }
