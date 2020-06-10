@@ -12,6 +12,11 @@ namespace CodeMeasurement.Measurements
         }
 
         public void GoThroughClassMetric() {
+            if (true)
+            {
+                double ttt;
+                // koment
+            } 
             double lelelele;
         }
 

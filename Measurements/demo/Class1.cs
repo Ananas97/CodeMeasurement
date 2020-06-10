@@ -4,7 +4,8 @@ using System.Text;
 
 namespace CodeMeasurement.Measurements.demo
 {
-    class Class1 {
-    
+    class Class1 {  
+        private void fufu() { 
+        }
     }
 }

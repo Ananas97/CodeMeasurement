@@ -177,7 +177,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     "RETURNING class_id";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                 sqlCommand.Parameters.AddWithValue("general_metrics_id", generalMetricsId);
-                sqlCommand.Parameters.AddWithValue("class_name", classMetric.name);
+                sqlCommand.Parameters.AddWithValue("class_name", classMetric.Name);
                 sqlCommand.Parameters.AddWithValue("lines_of_code", classMetric.NumberOfLines.ToString());
                 sqlCommand.Parameters.AddWithValue("lines_of_comments", classMetric.NumberOfComments.ToString());
                 sqlCommand.Parameters.AddWithValue("number_of_childrens", classMetric.NumberOfChildrens.ToString());
@@ -209,7 +209,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
                     "values(@class_id, @method_name, @lines_of_code, @lines_of_comments, @nested_block_depths)";
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
                 sqlCommand.Parameters.AddWithValue("class_id", classMetricsId);
-                sqlCommand.Parameters.AddWithValue("method_name", functionMetric.name);
+                sqlCommand.Parameters.AddWithValue("method_name", functionMetric.Name);
                 sqlCommand.Parameters.AddWithValue("lines_of_code", functionMetric.NumberOfLines.ToString());
                 sqlCommand.Parameters.AddWithValue("lines_of_comments", functionMetric.NumberOfComments.ToString());
                 sqlCommand.Parameters.AddWithValue("nested_block_depths", functionMetric.NestedBlockDepth.ToString());

@@ -6,26 +6,26 @@ namespace CodeMeasurement.Measurements.StorageObjects
 {
     class MetricContent
     {
-        public int begin, end;
-        public string name, filePath;
+        public int Begin, End;
+        public string Name, FilePath;
 
         protected MetricContent(int begin, int end, string name, string filePath) 
         {
-            this.begin = begin;
-            this.end = end;
-            this.name = name;
-            this.filePath = filePath;
+            this.Begin = begin;
+            this.End = end;
+            this.Name = name;
+            this.FilePath = filePath;
         }
 
         public List<string> GetContent()
         {
             List<string> content = new List<string>();
-            string[] fileContent = File.ReadAllLines(filePath);
+            string[] fileContent = File.ReadAllLines(FilePath);
 
             int counter = 1;
             foreach (string line in fileContent)
             {
-                if (counter >= begin && counter <= end)
+                if (counter >= Begin && counter <= End)
                 {
                     content.Add(line);
                 }
@@ -36,12 +36,12 @@ namespace CodeMeasurement.Measurements.StorageObjects
 
         public void PrintContent()
         {
-            string[] fileContent = File.ReadAllLines(filePath);
+            string[] fileContent = File.ReadAllLines(FilePath);
 
             int counter = 1;
             foreach (string line in fileContent)
             {
-                if (counter >= begin && counter <= end)
+                if (counter >= Begin && counter <= End)
                 {
                     Console.WriteLine(line);
                 }

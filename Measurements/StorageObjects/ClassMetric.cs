@@ -10,10 +10,12 @@ namespace CodeMeasurement.Measurements.StorageObjects
     {
         public List<FunctionMetric> FunctionMetricList = new List<FunctionMetric>();
         public int NumberOfLines, NumberOfComments, NumberOfChildrens, DepthOfInheritance, WeightedMethods;
+        public string NameOfSuperClass;
 
-        public ClassMetric(int begin, int end, string name, string filePath) : base(begin, end, name, filePath) 
+        public ClassMetric(int begin, int end, string name, string nameOfSuperClass, string filePath) : base(begin, end, name, filePath)
         { 
-        
+            Console.WriteLine(nameOfSuperClass);
+            this.NameOfSuperClass = nameOfSuperClass;
         }
     }
 }

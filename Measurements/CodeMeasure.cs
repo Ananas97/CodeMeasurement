@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using System.Xml;
+using System.Linq;
 
 namespace CodeMeasurement.Measurements
 {
@@ -23,23 +24,57 @@ namespace CodeMeasurement.Measurements
             this.Files = DirSearch(ProjectPath);
         }
 
-        public void GoThroughGeneralMetric()
+        public void Calculate() 
+        {
+            GoThroughGeneralMetric();
+            GoThroughClassMetric();
+            GoThroughFunctionMetric();
+        }
+
+        private void GoThroughGeneralMetric()
         {
             foreach(string file in Files)
             {
                 string[] fileContent = File.ReadAllLines(file);
                 generalMetric.NumberOfLines += CalculateLinesOfCode(fileContent);
                 generalMetric.NumberOfComments += CalculateLinesOfComments(fileContent);
-                CatchClasses(fileContent, file);
-                foreach (ClassMetric classMetric in generalMetric.ClassMetricList) {
-                    CatchFunctions(classMetric, file);                   
-                }
+                CatchClasses(fileContent, file);               
+            }
+            generalMetric.NumberOfNamespaces = CalculateNumberOfNamespaces();
+            generalMetric.NumberOfClasses = generalMetric.ClassMetricList.Count;
+        }
+
+        private void GoThroughClassMetric()
+        {
+            foreach (ClassMetric classMetric in generalMetric.ClassMetricList)
+            {
+                string[] classContent = classMetric.GetContent().ToArray();
+
+                classMetric.NumberOfLines = CalculateLinesOfCode(classContent);
+                classMetric.NumberOfComments = CalculateLinesOfComments(classContent);
+
+                classMetric.DepthOfInheritance = CalculateDepthOfInheritence(classMetric);
+                classMetric.NumberOfChildrens = CalculateNumberOfChildren(classMetric);
+                classMetric.WeightedMethods = CalculateWeightedMethods(classMetric);
+
+                CatchFunctions(classMetric, classMetric.FilePath);
             }
         }
 
-        public void GoThroughClassMetric()
+        private void GoThroughFunctionMetric()
         {
-         
+            foreach (ClassMetric classMetric in generalMetric.ClassMetricList)
+            {
+                foreach (FunctionMetric functionMetric in classMetric.FunctionMetricList)
+                {
+                    string[] functionContent = functionMetric.GetContent().ToArray();
+
+                    functionMetric.NumberOfLines = CalculateLinesOfCode(functionContent);
+                    functionMetric.NumberOfComments = CalculateLinesOfComments(functionContent);
+
+                    functionMetric.NestedBlockDepth = CalculateNestedBlockDepth(functionMetric);
+                }
+            }
         }
 
         private void CatchClasses(string[] fileContent, string filePath)
@@ -51,6 +86,7 @@ namespace CodeMeasurement.Measurements
             Boolean inClass = false;
             int braceCounter = 0;
             string name = "default";
+            string nameOfSuperClass = "none";
             int lineCounter = 1, start = 0;
             //ClassMetric currentClassMetric = new ClassMetric(0, 0, "", "");
 
@@ -61,14 +97,19 @@ namespace CodeMeasurement.Measurements
                     // look for a begning of a class
                     if (rg.IsMatch(line))
                     {
-                        Console.WriteLine("I've found a class!");
+                        // Console.WriteLine("I've found a class!");
                         // save starting line
                         start = lineCounter;
                         // save name of the class 
                         // name = Regex.Match(line, @"class\S*(?:\s\S+)?", RegexOptions.IgnoreCase).ToString().Substring(6);
-                        name = Regex.Match(line, @"class\s*([\S\d]+)\s*(?:\s*[\S\d]+)?", RegexOptions.IgnoreCase).Groups[1].Value;
+                        GroupCollection groups = Regex.Match(line, @"class\s+([\S\d]+)\s*(?::\s*([\S\d]+))?", RegexOptions.IgnoreCase).Groups;
+                        name = groups[1].Value;
+                        if (!groups[2].Value.Equals(String.Empty)) 
+                        {
+                            nameOfSuperClass = groups[2].Value;
+                        }
+                        Console.WriteLine("pryt" + nameOfSuperClass);
                         inClass = true;
-
                     }
                 }
                 else // we are in the class body
@@ -88,7 +129,7 @@ namespace CodeMeasurement.Measurements
                             // check if we made it to the end of class
                             if (braceCounter <= 0)
                             {
-                                AddClassMetric(start, lineCounter, name, filePath);
+                                AddClassMetric(start, lineCounter, name, nameOfSuperClass, filePath);
                                 inClass = false;
                                 braceCounter = 0;
                             }
@@ -110,7 +151,7 @@ namespace CodeMeasurement.Measurements
                         
                         if (braceCounter <= 0) // we made it to the end of the class!
                         {
-                            AddClassMetric(start, lineCounter, name, filePath);
+                            AddClassMetric(start, lineCounter, name, nameOfSuperClass, filePath);
                             inClass = false;
                             braceCounter = 0;
                         }
@@ -120,7 +161,7 @@ namespace CodeMeasurement.Measurements
                 lineCounter++;
             }
         }
-
+        
         private void CatchFunctions(ClassMetric classMetric, string filePath)
         {
             //Regex rg = new Regex(@"\(.*\)\s*\n*{", RegexOptions.IgnoreCase);
@@ -131,7 +172,7 @@ namespace CodeMeasurement.Measurements
 
             Boolean inFunction = false;
             string name = "default";
-            int braceCounter = 0, lineCounter = classMetric.begin, begin = 0;
+            int braceCounter = 0, lineCounter = classMetric.Begin, begin = 0;
 
             foreach (string line in classMetric.GetContent())
             {
@@ -140,7 +181,7 @@ namespace CodeMeasurement.Measurements
                     // look for a begning of a class
                     if (rg.IsMatch(line))
                     {
-                        Console.WriteLine("I've found a function!");
+                        // Console.WriteLine("I've found a function!");
                         // save starting line
                         begin = lineCounter;
                         // save name of the class 
@@ -198,6 +239,7 @@ namespace CodeMeasurement.Measurements
                 lineCounter++;
             }
         }
+        
         private void OldCatchFunction(ClassMetric classMetric, String file)
         {
             // regex for function in line, avoid key-words 
@@ -209,8 +251,8 @@ namespace CodeMeasurement.Measurements
 
             Boolean in_function = false;
             int braceCounter = 0;
-            string name = "";
-            int counter = classMetric.begin, start = 0;
+            string name;
+            int counter = classMetric.Begin, start;
             FunctionMetric currentFunctionMetric = new FunctionMetric(0, 0, "", "");
 
             Console.WriteLine("Another class");
@@ -222,7 +264,7 @@ namespace CodeMeasurement.Measurements
                 {
                     if (rg.IsMatch(line))
                     {
-                        Console.WriteLine("I've found a function!");
+                        // Console.WriteLine("I've found a function!");
                         start = counter;
                         // this will hopefully return the name of the function
                         name = Regex.Match(line, @"(.*)\s*\(.*\)\s*\n*{", RegexOptions.IgnoreCase).Groups[1].Value;
@@ -249,7 +291,7 @@ namespace CodeMeasurement.Measurements
                             braceCounter -= c;
                             if (braceCounter <= 0) 
                             {
-                                currentFunctionMetric.end = counter;
+                                currentFunctionMetric.End = counter;
                                 in_function = false;
                             }
                         }
@@ -263,7 +305,7 @@ namespace CodeMeasurement.Measurements
 
                         if (braceCounter <= 0) // we made it to the end of the function!
                         {
-                            currentFunctionMetric.end = counter;
+                            currentFunctionMetric.End = counter;
                             in_function = false;
                         }
                     }
@@ -273,16 +315,16 @@ namespace CodeMeasurement.Measurements
             }
         }
 
-        private int CalculateLinesOfCode(string[] fileContent)
+        private int CalculateLinesOfCode(string[] content)
         {
-            return fileContent.Length;
+            return content.Length;
         }
 
-        private int CalculateLinesOfComments(string[] fileContent)
+        private int CalculateLinesOfComments(string[] content)
         {
             int counter = 0;
 
-            foreach (string line in fileContent)
+            foreach (string line in content)
             {
                 string lineExperiment = line.Trim();
                 if (lineExperiment.StartsWith("//") ||
@@ -295,6 +337,62 @@ namespace CodeMeasurement.Measurements
             }
 
             return counter;
+        }
+
+        private int CalculateNumberOfNamespaces()
+        {
+            List<string> namespaces = new List<string>();
+            Regex rg = new Regex(@"^namespace\s+", RegexOptions.IgnoreCase);
+            foreach (string file in Files)
+            {
+                string[] fileContent = File.ReadAllLines(file);
+                foreach (string line in fileContent)
+                {
+                    if (rg.IsMatch(line)) 
+                    {
+                        // Console.WriteLine("I've found a ns!");
+                        string names = Regex.Match(line, @"^namespace\s+([\S\d]+)(?:.[\S\d])*", RegexOptions.IgnoreCase).Groups[1].Value;
+                        foreach (string ns in names.Split("."))
+                        {
+                            namespaces.Add(ns);
+                        }                      
+                    }
+                }
+            }  
+            return namespaces.Distinct().ToList().Count;
+        }
+
+        private int CalculateDepthOfInheritence(ClassMetric classMetric) 
+        {
+            return 1;
+        }
+
+        private int CalculateNumberOfChildren(ClassMetric classMetric)
+        {
+            return 1;
+        }
+
+        private int CalculateWeightedMethods(ClassMetric classMetric)
+        {
+            return 1;
+        }
+
+        private int CalculateNestedBlockDepth(FunctionMetric functionMetric)
+        {
+            Regex rgStartingBrace = new Regex("{", RegexOptions.IgnoreCase);
+            Regex rgClosingBrace = new Regex("}", RegexOptions.IgnoreCase);
+            int max = 0;
+            int braceCounter = 0;
+            foreach (string line in functionMetric.GetContent()) 
+            {
+                braceCounter += rgStartingBrace.Matches(line).Count;
+                if (braceCounter > max) 
+                {
+                    max = braceCounter;
+                }
+                braceCounter -= rgClosingBrace.Matches(line).Count;
+            }
+            return max;
         }
 
         private List<String> DirSearch(string sDir)
@@ -322,8 +420,8 @@ namespace CodeMeasurement.Measurements
             return files;
         }
 
-        private void AddClassMetric(int begin, int end, string name, string filePath) {
-            var classMetric = new ClassMetric(begin, end, name, filePath);
+        private void AddClassMetric(int begin, int end, string name, string nameOfSuperClass, string filePath) {
+            var classMetric = new ClassMetric(begin, end, name, nameOfSuperClass, filePath);
             generalMetric.ClassMetricList.Add(classMetric);
         }
 
@@ -333,6 +431,60 @@ namespace CodeMeasurement.Measurements
             classMetric.FunctionMetricList.Add(functionMetric);
         }
 
+        public void PrintMetrics() 
+        {
+            PrintGeneralMetrics();
+            foreach (ClassMetric classMetric in generalMetric.ClassMetricList)
+            {
+                PrintClassMetrics(classMetric);
+                foreach (FunctionMetric functionMetric in classMetric.FunctionMetricList)
+                {
+                    PrintFunctionMetrics(functionMetric);
+                }
+            }
+        }
 
+        private void PrintGeneralMetrics()
+        {
+            Console.WriteLine("----- GENERAL METRICS -----");
+            Console.WriteLine("NumberOfLines: \t\t" + generalMetric.NumberOfLines);
+            Console.WriteLine("NumberOfComments: \t" + generalMetric.NumberOfComments);
+            Console.WriteLine("NumberOfNamespaces: \t" + generalMetric.NumberOfNamespaces);
+            Console.WriteLine("NumberOfClasses: \t" + generalMetric.NumberOfClasses);
+        }
+
+        private void PrintClassMetrics(ClassMetric classMetric)
+        {
+            WriteLineClass("----- CLASS METRICS -----");
+            WriteLineClass("NAME: \t\t\t" + classMetric.Name);
+            if (!classMetric.NameOfSuperClass.Equals("none"))
+            {
+                WriteLineClass("NameOfSuperClass \t" + classMetric.NameOfSuperClass);
+            }
+            WriteLineClass("NumberOfLines \t\t" + classMetric.NumberOfLines);
+            WriteLineClass("NumberOfComments \t" + classMetric.NumberOfComments);
+            WriteLineClass("NumberOfChildrens \t" + classMetric.NumberOfChildrens);
+            WriteLineClass("DepthOfInheritance \t" + classMetric.DepthOfInheritance);
+            WriteLineClass("WeightedMethods \t" + classMetric.WeightedMethods);
+        }
+
+        private void PrintFunctionMetrics(FunctionMetric functionMetric)
+        {
+            WriteLineFunction("----- FUNCTION METRICS -----");
+            WriteLineFunction("NAME: \t\t\t" + functionMetric.Name);
+            WriteLineFunction("NumberOfLines \t\t" + functionMetric.NumberOfLines);
+            WriteLineFunction("NumberOfComments \t" + functionMetric.NumberOfComments);
+            WriteLineFunction("NestedBlockDepth \t" + functionMetric.NestedBlockDepth);
+        }
+
+        private void WriteLineClass(string print)
+        {
+            Console.WriteLine("\t" + print);
+        }
+
+        private void WriteLineFunction(string print)
+        {
+            Console.WriteLine("\t\t" + print);
+        }
     }
 }
