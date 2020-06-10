@@ -31,7 +31,10 @@ Configure database
 	TrustServerCertificate=False;
 	Connection Timeout=30;
  
-## how to run tests
+How to run tests
+------------
+To run unit tests please use a command: dotnet test
+To run tests on front-end part run: npm test
 
 How to deploy the application to production
 -------------
