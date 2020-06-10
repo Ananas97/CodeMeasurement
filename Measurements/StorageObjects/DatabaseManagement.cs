@@ -287,7 +287,7 @@ namespace CodeMeasurement.Measurements.StorageObjects
             return result;
         }
 
-        private List<ProjectInfo> getSpecificProjectInfo(List<ProjectInfo> projectInfos)
+        private List<ProjectInfo> getSpecificProjectInfo(List<ProjectInfo> projectInfos) // working
         {
             foreach (ProjectInfo project in projectInfos) {
                 using (var connection = new NpgsqlConnection(connectionString))
@@ -308,15 +308,82 @@ namespace CodeMeasurement.Measurements.StorageObjects
                         generalMetric.NumberOfComments = reader.GetInt32(3);
                         generalMetric.NumberOfClasses = reader.GetInt32(4);
                         generalMetric.NumberOfNamespaces = 3;
-
-
                         project.generalMetricList.Add(generalMetric);
-                    }       
+                    }
                     connection.Close();
-                }
-            }
 
-                return projectInfos;
+                    foreach(GeneralMetric generalMetric in project.generalMetricList)           
+                    {
+                        List<ClassMetric> classMetrics = getClassMetricToGeneralMetric(generalMetric);
+                        foreach(ClassMetric classMetric in classMetrics)
+                        {
+                            generalMetric.ClassMetricList.Add(classMetric);
+                        }
+                    }
+                }
+            }       
+            return projectInfos;
+        }
+
+        private List<ClassMetric> getClassMetricToGeneralMetric(GeneralMetric generalMetric)
+        {
+            List<ClassMetric> classMetrics = new List<ClassMetric>();
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                var sqlStatement = "SELECT class_id, class_name, lines_of_code, lines_of_comments, number_of_childrens, " +
+                    "depth_of_inheritance, weighted_methods FROM class_metrics WHERE general_metrics_id = @general_metrics_id";
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+                sqlCommand.Parameters.AddWithValue("general_metrics_id", (long) generalMetric.generalMetricId);
+                NpgsqlDataReader reader = sqlCommand.ExecuteReader();
+                while(reader.Read())
+                {
+                    ClassMetric classMetric = new ClassMetric(0, 0, reader.GetString(1), "", "");
+                    classMetric.classMetricId = (int)reader.GetInt64(0);
+                    classMetric.NumberOfLines = reader.GetInt32(2);
+                    classMetric.NumberOfComments = reader.GetInt32(3);
+                    classMetric.NumberOfChildrens = reader.GetInt32(4);
+                    classMetric.DepthOfInheritance = reader.GetInt32(5);
+                    classMetric.WeightedMethods = reader.GetInt32(6);
+                    generalMetric.ClassMetricList.Add(classMetric);
+                }
+                connection.Close();      
+                
+                foreach(ClassMetric classMetric in generalMetric.ClassMetricList)
+                {
+                    List<FunctionMetric> functionMetrics = getFunctionMetricToClassMetric(classMetric);
+                    foreach(FunctionMetric function in functionMetrics)
+                    {
+                        classMetric.FunctionMetricList.Add(function);
+                    }
+                }                  
+            }
+            return classMetrics;
+        }
+
+        private List<FunctionMetric> getFunctionMetricToClassMetric(ClassMetric classMetric)
+        {
+            List<FunctionMetric> functionMetrics = new List<FunctionMetric>();
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                var sqlStatement = "SELECT method_name, lines_of_code, lines_of_comments, nested_block_depths " +
+                    "FROM method_metrics WHERE class_id = @class_id";
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+                sqlCommand.Parameters.AddWithValue("class_id", (long) classMetric.classMetricId);
+                NpgsqlDataReader reader = sqlCommand.ExecuteReader();
+                Console.WriteLine("-HEJ");
+                while(reader.Read())
+                {
+                    FunctionMetric function = new FunctionMetric(0, 0, reader.GetString(0), "");
+                    function.NumberOfLines = reader.GetInt32(1);
+                    function.NumberOfComments = reader.GetInt32(2);
+                    function.NestedBlockDepth = reader.GetInt32(3);
+                    functionMetrics.Add(function);
+                }      
+                connection.Close();
+            }        
+            return functionMetrics;
         }
     }
 }
